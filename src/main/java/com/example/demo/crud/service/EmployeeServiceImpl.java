@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.crud.entity.Employee;
+import com.example.demo.crud.exceptions.NoEmployeeFoundException;
 import com.example.demo.crud.model.EmployeeRequest;
 import com.example.demo.crud.model.EmployeeResponse;
 import com.example.demo.crud.model.GetEmployeeResponse;
@@ -39,24 +40,22 @@ public class EmployeeServiceImpl implements EmployeeService{
 	}
 
 	@Override
-	public GetEmployeeResponse getEmployeeBasedOnId(int id) {
+	public GetEmployeeResponse getEmployeeBasedOnId(int id) throws NoEmployeeFoundException{
 		// TODO Auto-generated method stub
-		try {
+		
 		List<Employee> l1 = l.stream()
 						.filter(x -> (x.getId()==id))
 						.collect(Collectors.toList());
 		System.out.println(l1);
 		if(l1.isEmpty()) {
-			return null;
+			throw new NoEmployeeFoundException("Employee with id " + id + " does not exist");
 		}
+		else {
 		Employee e1 = l1.get(0);
 		GetEmployeeResponse response = new GetEmployeeResponse(e1.getId(),e1.getName(),e1.getSalary(),e1.getDepartment());
 		return response;
 		}
-		catch(Exception l) {
-			l.printStackTrace();
-			return null;
-		}
+		
 	}
 
 }
