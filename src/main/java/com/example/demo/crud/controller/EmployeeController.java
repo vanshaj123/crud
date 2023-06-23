@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.crud.exceptions.NoEmployeeFoundException;
 import com.example.demo.crud.model.EmployeeRequest;
 import com.example.demo.crud.model.EmployeeResponse;
 import com.example.demo.crud.model.GetEmployeeResponse;
@@ -29,7 +30,7 @@ public class EmployeeController {
 		}
 		
 		@GetMapping("/getEmployee/{id}")
-		public GetEmployeeResponse getaEmployee(@PathVariable int id) {
+		public GetEmployeeResponse getaEmployee(@PathVariable int id) throws NoEmployeeFoundException {
 			//System.out.println(l);
 			GetEmployeeResponse response = service.getEmployeeBasedOnId(id);
 			return response;
