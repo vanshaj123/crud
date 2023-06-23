@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.crud.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.model.EmployeeRequest;
-import com.example.demo.model.EmployeeResponse;
-import com.example.demo.service.EmployeeServiceImpl;
+import com.example.demo.crud.model.EmployeeRequest;
+import com.example.demo.crud.model.EmployeeResponse;
+import com.example.demo.crud.service.EmployeeServiceImpl;
 
 @RestController
 @RequestMapping("/v1")

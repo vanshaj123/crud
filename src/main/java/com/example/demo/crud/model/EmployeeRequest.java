@@ -1,4 +1,4 @@
-package com.example.demo.entity;
+package com.example.demo.crud.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,14 +8,12 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
-public class Employee {
-	int id;
-	String name;
-	int salary;
-	String department;
-	
-	
+public class EmployeeRequest {
+	public int id;
+	public String name;
+	public int salary;
+	public String department;
 }

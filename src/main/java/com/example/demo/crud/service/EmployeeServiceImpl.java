@@ -1,13 +1,14 @@
-package com.example.demo.service;
+package com.example.demo.crud.service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
-import com.example.demo.entity.Employee;
-import com.example.demo.model.EmployeeRequest;
-import com.example.demo.model.EmployeeResponse;
+
+import com.example.demo.crud.entity.Employee;
+import com.example.demo.crud.model.EmployeeRequest;
+import com.example.demo.crud.model.EmployeeResponse;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService{
