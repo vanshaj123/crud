@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.crud.entity.Employee;
+import com.example.demo.crud.exceptions.IdMismatchException;
 import com.example.demo.crud.exceptions.NoEmployeeFoundException;
 import com.example.demo.crud.model.EmployeeRequest;
 import com.example.demo.crud.model.EmployeeResponse;
@@ -32,13 +33,25 @@ public class EmployeeServiceImpl implements EmployeeService{
 //	}
 
 	@Override
-	public EmployeeResponse addingEmployee(EmployeeRequest empRequest) {
+	public EmployeeResponse addingEmployee(EmployeeRequest empRequest) throws IdMismatchException {
 		// TODO Auto-generated method stub
+		int flag = 0;
+		for(Employee e1 : l) {
+			if(e1.getId()==empRequest.id) {
+				flag=1;
+				break;
+			}
+		}
+		
+		if(flag==1) {
+			throw new IdMismatchException("Employee with id " + empRequest.getId() + " already exists. Kindly create a new employee with another id");
+		}
+		else {
 		e  = new Employee(empRequest.id,empRequest.name,empRequest.salary,empRequest.department);
 		l.add(e);
 		EmployeeResponse response = new EmployeeResponse(e.getId(),e.getName(),e.getSalary(),e.getDepartment(),201,"Employee is created successfully");
 		return response;
-		
+		}
 	}
 
 	@Override
@@ -67,7 +80,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 	}
 
 	@Override
-	public UpdateEmployeeResponse updateEmployee(int id, UpdateEmployeeRequest empRequest) throws NoEmployeeFoundException {
+	public UpdateEmployeeResponse updateEmployee(int id, UpdateEmployeeRequest empRequest) throws NoEmployeeFoundException,IdMismatchException {
 		// TODO Auto-generated method stub
 //		List<Employee> l1 = l.stream()
 //				.filter(x -> (x.getId()==id))
@@ -83,6 +96,10 @@ public class EmployeeServiceImpl implements EmployeeService{
 		}
 		if(flag==0) {
 			throw new NoEmployeeFoundException("Employee with id " + id + " does not exist");
+		}
+		
+		else if(empRequest.getId() != id) {
+			throw new IdMismatchException("Id " + id + " does not match the id given in the update Employee request. Kindly check the ids and then try again");
 		}
 		else {
 			l.remove(index);

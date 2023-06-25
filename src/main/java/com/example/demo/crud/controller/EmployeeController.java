@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.crud.entity.Employee;
+import com.example.demo.crud.exceptions.IdMismatchException;
 import com.example.demo.crud.exceptions.NoEmployeeFoundException;
 import com.example.demo.crud.model.EmployeeRequest;
 import com.example.demo.crud.model.EmployeeResponse;
@@ -29,7 +30,7 @@ public class EmployeeController {
 	
 
 		@PostMapping(value = "/addaEmployee",consumes = "application/json")
-		public EmployeeResponse addingEmployee(@RequestBody EmployeeRequest request) {
+		public EmployeeResponse addingEmployee(@RequestBody EmployeeRequest request) throws IdMismatchException{
 			System.out.println(request);
 			EmployeeResponse e = service.addingEmployee(request);
 			return e;
@@ -49,7 +50,7 @@ public class EmployeeController {
 		}
 		
 		@PutMapping("/updateEmployee/{id}")
-		public UpdateEmployeeResponse updateEmployee(@PathVariable int id,@RequestBody UpdateEmployeeRequest request) throws NoEmployeeFoundException{
+		public UpdateEmployeeResponse updateEmployee(@PathVariable int id,@RequestBody UpdateEmployeeRequest request) throws NoEmployeeFoundException,IdMismatchException{
 			UpdateEmployeeResponse response = service.updateEmployee(id, request);
 			return response;
 		}
