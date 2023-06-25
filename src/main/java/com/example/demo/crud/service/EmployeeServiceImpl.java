@@ -13,6 +13,8 @@ import com.example.demo.crud.exceptions.NoEmployeeFoundException;
 import com.example.demo.crud.model.EmployeeRequest;
 import com.example.demo.crud.model.EmployeeResponse;
 import com.example.demo.crud.model.GetEmployeeResponse;
+import com.example.demo.crud.model.UpdateEmployeeRequest;
+import com.example.demo.crud.model.UpdateEmployeeResponse;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService{
@@ -54,6 +56,40 @@ public class EmployeeServiceImpl implements EmployeeService{
 		Employee e1 = l1.get(0);
 		GetEmployeeResponse response = new GetEmployeeResponse(e1.getId(),e1.getName(),e1.getSalary(),e1.getDepartment());
 		return response;
+		}
+		
+	}
+
+	@Override
+	public List<Employee> getAllEmployees() {
+		// TODO Auto-generated method stub
+		return l;
+	}
+
+	@Override
+	public UpdateEmployeeResponse updateEmployee(int id, UpdateEmployeeRequest empRequest) throws NoEmployeeFoundException {
+		// TODO Auto-generated method stub
+//		List<Employee> l1 = l.stream()
+//				.filter(x -> (x.getId()==id))
+//				.collect(Collectors.toList());
+//		System.out.println(l1);
+		int flag = 0;
+		int index = 0;
+		for(Employee e1 : l) {
+			if(e1.getId()==id) {
+				flag = 1;
+				index = l.indexOf(e1);
+			}
+		}
+		if(flag==0) {
+			throw new NoEmployeeFoundException("Employee with id " + id + " does not exist");
+		}
+		else {
+			l.remove(index);
+			 l.add(index, new Employee(empRequest.getId(),empRequest.getName(),empRequest.getSalary(),empRequest.getDepartment())); 
+			 System.out.println(l.get(index).getName());
+			UpdateEmployeeResponse response = new UpdateEmployeeResponse(l.get(index).getId(),l.get(index).getName(),l.get(index).getSalary(),l.get(index).getDepartment(),202,"Employee is updated successfully");
+			return response;
 		}
 		
 	}
